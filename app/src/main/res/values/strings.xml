@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Anime Characters</string>
+    <string-array name="charNames">
+        <item>Eren</item>
+        <item>Tanjiro</item>
+        <item>Melodias</item>
+        <item>Naruto</item>
+        <item>Mikasa</item>
+        <item>Deku</item>
+        <item>Kaneki</item>
+        <item>Levi</item>
+        <item>Anya</item>
+        <item>Yuichi</item>
+    </string-array>
+    <string-array name="animeNames">
+        <item>Attack on titan</item>
+        <item>Demon slayer</item>
+        <item>nanatsu no taizi</item>
+        <item>Naruto series</item>
+        <item>Attack on Titan</item>
+        <item>Boku no hero</item>
+        <item>Tokyo ghoul</item>
+        <item>Attack on titan</item>
+        <item>Spy family</item>
+        <item>Tomodachi game</item>
+    </string-array>
+    <string-array name="animeDescibe">
+        <item>He is the main character of attack on titan,he wants to set himself and his people free from the curse of titans</item>
+        <item>He is the main character of demon slayer, his sister turned into a demon so he is trying to bring his sister back to her humanity</item>
+        <item>He is the main character of nanatsu no taizai ,they are seven people who are very strong trying to defend their country</item>
+        <item>He is the main character of naruto,he was being ignored but he is trying to become the ruler of his people </item>
+        <item>She is Eren\'s lover she is protecting him at any cost</item>
+        <item>He is the main character of boku no hero,in world of children who are being born having strong powers he is the only one who is natural which means doesn\'t have any power so what can he do alone ?</item>
+
+        <item>He is the main character of Tokyo ghoul who turns into a ghoul trying to fit in human world</item>
+        <item>He is Eren\'s Captain he is the strongest person among his people ,he lives to make the hope of his dead friends to come true</item>
+        <item>anya is the main character in spy family ,she has a power to read minds but one day she was adapted by a spy who doesn\'t know about her power </item>
+        <item>he is the main character of tomodachi game ,he found himself trapped in a game in which he will live if he gives up his friends</item>
+    </string-array>
+</resources>
