@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -21,10 +23,13 @@ public class MainActivity extends AppCompatActivity implements RecycleViewInterf
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         RecyclerView recyclerView = findViewById(R.id.mrecycleview);
         setUpAnime();
         AC_recycleViewAdaptar adaptar = new AC_recycleViewAdaptar(this,myAnimeList,this);
@@ -43,12 +48,12 @@ public class MainActivity extends AppCompatActivity implements RecycleViewInterf
 
     @Override
     public void onitemClick(int position) {
-        MediaPlayer mp =MediaPlayer.create(this,R.raw.click);
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         mp.start();
-        Intent intent = new Intent(MainActivity.this,MainActivity2.class);
-        intent.putExtra("NameOfCharacter",myAnimeList.get(position).nameOfCharacter);
-        intent.putExtra("Describtion",myAnimeList.get(position).desAnime);
-        intent.putExtra("Image",myAnimeList.get(position).Images);
+        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+        intent.putExtra("NameOfCharacter", myAnimeList.get(position).nameOfCharacter);
+        intent.putExtra("Describtion", myAnimeList.get(position).desAnime);
+        intent.putExtra("Image", myAnimeList.get(position).Images);
 
         startActivity(intent);
     }
