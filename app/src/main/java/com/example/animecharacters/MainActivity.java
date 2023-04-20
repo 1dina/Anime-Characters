@@ -3,15 +3,20 @@ package com.example.animecharacters;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements RecycleViewInterface {
     ArrayList<animeCharacterModel>myAnimeList=new ArrayList<>();
@@ -21,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements RecycleViewInterf
             R.drawable.kaneki,R.drawable.levi,R.drawable.anya_forger_icon,
             R.drawable.resource__};
 
+    private AnimeDataBase dataBase;
+    int counter=-1;
+
 
 
 
@@ -29,20 +37,41 @@ public class MainActivity extends AppCompatActivity implements RecycleViewInterf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        RecyclerView recyclerView = findViewById(R.id.mrecycleview);
+        setUpDB();
         setUpAnime();
-        AC_recycleViewAdaptar adaptar = new AC_recycleViewAdaptar(this,myAnimeList,this);
-        recyclerView.setAdapter(adaptar);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+
     }
+
+    private void setUpDB() {
+    dataBase = Room.databaseBuilder(getApplicationContext(),AnimeDataBase.class,"anime_db")
+           .allowMainThreadQueries()
+            .build();
+    }
+
     private void setUpAnime(){
         String[] charNames =getResources().getStringArray(R.array.charNames);
         String[] animeNames =getResources().getStringArray(R.array.animeNames);
         String[] desAnimes=getResources().getStringArray(R.array.animeDescibe);
-        for(int i=0;i<charNames.length;i++){
-            myAnimeList.add(new animeCharacterModel(charNames[i],animeNames[i],images[i],desAnimes[i]));
-        }
+        RecyclerView recyclerView = findViewById(R.id.mrecycleview);
+        Button button= findViewById(R.id.addButton);
+        button.setOnClickListener(view -> {
+            counter++;
+            if(counter< charNames.length) {
+               myAnimeList.add(new animeCharacterModel(1,charNames[counter], animeNames[counter], images[counter], desAnimes[counter]));
+                //dataBase.charactersDao().insertAnime(new animeCharacterModel(1,charNames[counter], animeNames[counter], images[counter], desAnimes[counter]));
+                AC_recycleViewAdaptar adaptar = new AC_recycleViewAdaptar(this, myAnimeList, this);
+                recyclerView.setAdapter(adaptar);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+            } else Toast.makeText(this, "full!,please delete any element to add another", Toast.LENGTH_SHORT).show();  });
+
+
+
 
     }
 
@@ -56,5 +85,20 @@ public class MainActivity extends AppCompatActivity implements RecycleViewInterf
         intent.putExtra("Image", myAnimeList.get(position).Images);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void deleteAnime(animeCharacterModel animeCharacterModel) {
+
+    }
+
+    @Override
+    public void insertAnime(animeCharacterModel animeCharacterModel) {
+
+    }
+
+    @Override
+    public List<animeCharacterModel> getAll() {
+        return null;
     }
 }

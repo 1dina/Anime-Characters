@@ -42,7 +42,7 @@ public class AC_recycleViewAdaptar extends RecyclerView.Adapter<AC_recycleViewAd
         holder.tvCharName.setText(myAnimeList.get(position).nameOfCharacter);
         holder.tvAnimeName.setText(myAnimeList.get(position).nameOfAnime);
         holder.Character.setImageResource(myAnimeList.get(position).Images);
-        setAnimation(holder.itemView,position);
+        //setAnimation(holder.itemView,position);
 
 
     }
@@ -76,11 +76,11 @@ public class AC_recycleViewAdaptar extends RecyclerView.Adapter<AC_recycleViewAd
 
         }
     }
-    private void setAnimation (View viewAnimation,int postion){
+  /*  private void setAnimation (View viewAnimation,int postion){
         if( postion >lastposition){
             Animation slideIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
             viewAnimation.startAnimation(slideIn);
             lastposition=postion;
         }
-    }
+    }*/
 }
