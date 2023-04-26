@@ -13,7 +13,7 @@ import java.util.List;
 public interface CharactersDao {
     @Delete
     void deleteAnime(animeCharacterModel animeCharacterModel);
-    @Insert(onConflict = OnConflictStrategy.NONE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAnime(animeCharacterModel animeCharacterModel);
     @Query("SELECT * From Otaku")
    List<animeCharacterModel>getAll();

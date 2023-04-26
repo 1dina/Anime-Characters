@@ -12,8 +12,8 @@ public class animeCharacterModel {
      String nameOfAnime;
     int Images;
    String desAnime;
-    public animeCharacterModel(int id, String nameOfCharacter, String nameOfAnime, int images, String desAnime) {
-        this.id = id;
+    public animeCharacterModel( int id,String nameOfCharacter, String nameOfAnime, int images, String desAnime) {
+       this.id=id;
         this.nameOfCharacter = nameOfCharacter;
         this.nameOfAnime = nameOfAnime;
         this.Images = images;
@@ -25,15 +25,6 @@ public class animeCharacterModel {
 
     }
 
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNameOfCharacter() {
         return nameOfCharacter;

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -57,22 +58,23 @@ public class AC_recycleViewAdaptar extends RecyclerView.Adapter<AC_recycleViewAd
         TextView tvCharName;
         TextView tvAnimeName;
         ImageView Character;
-        public MyViewHolder(@NonNull View itemView,RecycleViewInterface recycleViewInterface) {
+
+        public MyViewHolder(@NonNull View itemView, RecycleViewInterface recycleViewInterface) {
             super(itemView);
             tvCharName = itemView.findViewById(R.id.textView);
-         tvAnimeName = itemView.findViewById(R.id.textView2);
-             Character =itemView.findViewById(R.id.imageView);
-             itemView.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View view) {
-                     if (recycleViewInterface != null) {
-                         int pos= getAdapterPosition();
-                         if(pos != RecyclerView.NO_POSITION){
-                             recycleViewInterface.onitemClick(pos);
-                         }
-                     }
-                 }
-             });
+            tvAnimeName = itemView.findViewById(R.id.textView2);
+            Character = itemView.findViewById(R.id.imageView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recycleViewInterface != null) {
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION) {
+                            recycleViewInterface.onitemClick(pos);
+                        }
+                    }
+                }
+            });
 
         }
     }

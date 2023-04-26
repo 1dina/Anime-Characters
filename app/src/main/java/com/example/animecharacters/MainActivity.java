@@ -1,6 +1,8 @@
 package com.example.animecharacters;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -10,6 +12,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -25,9 +28,13 @@ public class MainActivity extends AppCompatActivity implements RecycleViewInterf
             R.drawable.the_best_mikasa_ackerman_quotes,R.drawable.deku,
             R.drawable.kaneki,R.drawable.levi,R.drawable.anya_forger_icon,
             R.drawable.resource__};
+    int[]ID={1,2,3,4,5,6,7,8,9,10};
 
     private AnimeDataBase dataBase;
     int counter=-1;
+
+    AC_recycleViewAdaptar adaptar;
+    RecyclerView recyclerView;
 
 
 
@@ -39,32 +46,52 @@ public class MainActivity extends AppCompatActivity implements RecycleViewInterf
         setContentView(R.layout.activity_main);
         setUpDB();
         setUpAnime();
+        myAnimeList.addAll(dataBase.charactersDao().getAll());
+        setUpRV();
+        ItemTouchHelper helper =new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(recyclerView);
+
+
+
 
 
 
 
     }
 
+
     private void setUpDB() {
     dataBase = Room.databaseBuilder(getApplicationContext(),AnimeDataBase.class,"anime_db")
-           .allowMainThreadQueries()
+
+            .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
+
             .build();
+
+
     }
 
     private void setUpAnime(){
         String[] charNames =getResources().getStringArray(R.array.charNames);
         String[] animeNames =getResources().getStringArray(R.array.animeNames);
         String[] desAnimes=getResources().getStringArray(R.array.animeDescibe);
-        RecyclerView recyclerView = findViewById(R.id.mrecycleview);
         Button button= findViewById(R.id.addButton);
         button.setOnClickListener(view -> {
             counter++;
             if(counter< charNames.length) {
-               myAnimeList.add(new animeCharacterModel(1,charNames[counter], animeNames[counter], images[counter], desAnimes[counter]));
-                //dataBase.charactersDao().insertAnime(new animeCharacterModel(1,charNames[counter], animeNames[counter], images[counter], desAnimes[counter]));
-                AC_recycleViewAdaptar adaptar = new AC_recycleViewAdaptar(this, myAnimeList, this);
-                recyclerView.setAdapter(adaptar);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                animeCharacterModel animeCharacterModel =new animeCharacterModel(ID[counter],charNames[counter], animeNames[counter], images[counter], desAnimes[counter]);
+
+                dataBase.charactersDao().insertAnime(animeCharacterModel);
+                myAnimeList.clear();
+                myAnimeList.addAll(dataBase.charactersDao().getAll());
+                adaptar.notifyDataSetChanged();
+
+
+
+
+
+
+
 
 
 
@@ -74,6 +101,30 @@ public class MainActivity extends AppCompatActivity implements RecycleViewInterf
 
 
     }
+    private void setUpRV(){
+         recyclerView = findViewById(R.id.mrecycleview);
+         adaptar = new AC_recycleViewAdaptar(this,myAnimeList, this);
+        recyclerView.setAdapter(adaptar);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+    ItemTouchHelper.SimpleCallback callback =new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction){
+            Toast.makeText(MainActivity.this, "item has been deleted!", Toast.LENGTH_SHORT).show();
+        animeCharacterModel animeCharacterModel= myAnimeList.remove(viewHolder.getAdapterPosition());
+        dataBase.charactersDao().deleteAnime(animeCharacterModel);
+            myAnimeList.clear();
+            myAnimeList.addAll(dataBase.charactersDao().getAll());
+          adaptar.notifyDataSetChanged();
+        }
+    };
+
 
     @Override
     public void onitemClick(int position) {
